@@ -579,13 +579,7 @@ public abstract class WheelPicker extends View {
           invalidate();
         }
       });
-      va.addListener(new AnimatorListenerAdapter() {
-        @Override
-        public void onAnimationEnd(Animator animation) {
-          currentItemPosition = itemPosition;
-          onItemSelected();
-        }
-      });
+      currentItemPosition = itemPosition;
       va.start();
     }
   }

@@ -27,7 +27,6 @@ public class SingleDateAndTimePicker extends LinearLayout {
     public static final boolean IS_CYCLIC_DEFAULT = true;
     public static final boolean IS_CURVED_DEFAULT = false;
     public static final boolean MUST_BE_ON_FUTUR_DEFAULT = false;
-    public static final int DELAY_BEFORE_CHECK_PAST = 200;
     private static final int VISIBLE_ITEM_COUNT_DEFAULT = 7;
     private static final int PM_HOUR_ADDITION = 12;
 
@@ -93,16 +92,16 @@ public class SingleDateAndTimePicker extends LinearLayout {
         daysPicker.setOnDaySelectedListener(new WheelDayPicker.OnDaySelectedListener() {
             @Override
             public void onDaySelected(WheelDayPicker picker, int position, String name, Date date) {
-                updateListener();
                 checkMinMaxDate(picker);
+                updateListener();
             }
         });
 
         minutesPicker.setOnMinuteSelectedListener(new WheelMinutePicker.OnMinuteSelectedListener() {
             @Override
             public void onMinuteSelected(WheelMinutePicker picker, int position, int minutes) {
-                updateListener();
                 checkMinMaxDate(picker);
+                updateListener();
             }
 
             @Override
@@ -119,8 +118,8 @@ public class SingleDateAndTimePicker extends LinearLayout {
         hoursPicker.setOnHourSelectedListener(new WheelHourPicker.OnHourSelectedListener() {
             @Override
             public void onHourSelected(WheelHourPicker picker, int position, int hours) {
-                updateListener();
                 checkMinMaxDate(picker);
+                updateListener();
             }
 
             @Override
@@ -137,14 +136,14 @@ public class SingleDateAndTimePicker extends LinearLayout {
         amPmPicker.setOnAmPmSelectedListener(new WheelAmPmPicker.OnAmPmSelectedListener() {
             @Override
             public void onAmSelected(WheelAmPmPicker picker) {
-                updateListener();
                 checkMinMaxDate(picker);
+                updateListener();
             }
 
             @Override
             public void onPmSelected(WheelAmPmPicker picker) {
-                updateListener();
                 checkMinMaxDate(picker);
+                updateListener();
             }
         });
 
@@ -274,15 +273,15 @@ public class SingleDateAndTimePicker extends LinearLayout {
         if (hoursPicker != null) {
             hoursPicker.setIsAmPm(isAmPm);
 
-            if ( defaultDate != null ) {
+            if (defaultDate != null) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(defaultDate);
-                if(isAmPm){
-                    hoursPicker.setDefaultHour( calendar.get(Calendar.HOUR));
-                }else{
-                    hoursPicker.setDefaultHour( calendar.get(Calendar.HOUR_OF_DAY));
+                if (isAmPm) {
+                    hoursPicker.setDefaultHour(calendar.get(Calendar.HOUR));
+                } else {
+                    hoursPicker.setDefaultHour(calendar.get(Calendar.HOUR_OF_DAY));
                 }
-                
+
             }
 
         }
@@ -308,33 +307,23 @@ public class SingleDateAndTimePicker extends LinearLayout {
     }
 
     private void checkBeforeMinDate(final WheelPicker picker) {
-        picker.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (minDate != null && isBeforeMinDate(getDate())) {
-                    //scroll to Min position
-                    amPmPicker.scrollTo(amPmPicker.findIndexOfDate(minDate));
-                    daysPicker.scrollTo(daysPicker.findIndexOfDate(minDate));
-                    minutesPicker.scrollTo(minutesPicker.findIndexOfDate(minDate));
-                    hoursPicker.scrollTo(hoursPicker.findIndexOfDate(minDate));
-                }
-            }
-        }, DELAY_BEFORE_CHECK_PAST);
+        if (minDate != null && isBeforeMinDate(getDate())) {
+            //scroll to Min position
+            amPmPicker.scrollTo(amPmPicker.findIndexOfDate(minDate));
+            daysPicker.scrollTo(daysPicker.findIndexOfDate(minDate));
+            minutesPicker.scrollTo(minutesPicker.findIndexOfDate(minDate));
+            hoursPicker.scrollTo(hoursPicker.findIndexOfDate(minDate));
+        }
     }
 
     private void checkAfterMaxDate(final WheelPicker picker) {
-        picker.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (maxDate != null && isAfterMaxDate(getDate())) {
-                    //scroll to Max position
-                    amPmPicker.scrollTo(amPmPicker.findIndexOfDate(maxDate));
-                    daysPicker.scrollTo(daysPicker.findIndexOfDate(maxDate));
-                    minutesPicker.scrollTo(minutesPicker.findIndexOfDate(maxDate));
-                    hoursPicker.scrollTo(hoursPicker.findIndexOfDate(maxDate));
-                }
-            }
-        }, DELAY_BEFORE_CHECK_PAST);
+        if (maxDate != null && isAfterMaxDate(getDate())) {
+            //scroll to Max position
+            amPmPicker.scrollTo(amPmPicker.findIndexOfDate(maxDate));
+            daysPicker.scrollTo(daysPicker.findIndexOfDate(maxDate));
+            minutesPicker.scrollTo(minutesPicker.findIndexOfDate(maxDate));
+            hoursPicker.scrollTo(hoursPicker.findIndexOfDate(maxDate));
+        }
     }
 
     private boolean isBeforeMinDate(Date date) {
@@ -394,7 +383,7 @@ public class SingleDateAndTimePicker extends LinearLayout {
         hoursPicker.setHoursStep(hoursStep);
     }
 
-    public void setDefaultDate( Date date ) {
+    public void setDefaultDate(Date date) {
         this.defaultDate = date;
     }
 
